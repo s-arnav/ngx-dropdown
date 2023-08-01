@@ -1,0 +1,35 @@
+<div #dropdown class="dropdown-container">
+  <div *ngIf="!searchable" class="dropdown-trigger" (click)="toggleDropdown()">
+    <p>{{ selected ? selected.value : "Select" }}</p>
+  </div>
+  <input
+    *ngIf="searchable"
+    placeholder="Search"
+    type="search"
+    class="search-input"
+    [formControl]="searchText"
+    (focus)="isOpen = true"
+  />
+  <div class="dropdown-content" [class.visible]="isOpen">
+    <ng-container *ngIf="!searchable">
+      <div
+        class="dropdown-item"
+        *ngFor="let option of options"
+        [class.selected]="selected?.key === option.key"
+        (click)="selectOption(option)"
+      >
+        {{ option.value }}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="searchable">
+      <div
+        class="dropdown-item"
+        *ngFor="let option of searchResults"
+        [class.selected]="selected?.key === option.key"
+        (click)="selectOption(option)"
+      >
+        {{ option.value }}
+      </div>
+    </ng-container>
+  </div>
+</div>
